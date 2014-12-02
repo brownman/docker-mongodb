@@ -1,18 +1,18 @@
-machine:
+docker build --tag=${USER}/mongodb .machine:
   services:
     - docker
 
 dependencies:
   override:
     - docker info
-    - docker build -t brownman/mongodb .
+    - docker build --tag=brownman/mongodb .
 
 test:
   override:
      - echo override goes here
   #   - docker run -d -p 9200:9200 brownman/docker-gitlab-ci-runner; sleep 10
   #   - curl --retry 10 --retry-delay 5 -v http://localhost:9200
-     - mkdir -p /opt/mongodb
+     - mkdir -p $HOME/opt/mongodb
      - docker run -name mongodb -d v /opt/mongodb:/var/lib/mongodb brownman/mongodb:latest
 
 deployment:
